@@ -11,11 +11,19 @@ public class ArrowSaveManager : MonoBehaviour
 
 
 
+<<<<<<< HEAD
     void Start()
     {
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
         savePath = Path.Combine(Application.persistentDataPath, $"TriggeredArrows_{timestamp}.txt");
         LoadTriggeredArrows(); // 你也可以决定是否每次都加载
+=======
+    void Awake()
+    {
+        savePath = Path.Combine(Application.persistentDataPath, "TriggeredArrows.txt");
+        LoadTriggeredArrows();
+        //ShowIntroDialog(); // 启动时显示欢迎引导
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
     }
 
     public void StartNavigation()

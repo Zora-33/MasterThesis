@@ -13,8 +13,12 @@ public class Nav_Test : MonoBehaviour
     }
 
     public List<PlatformPoint> platformPoints = new List<PlatformPoint>();
+<<<<<<< HEAD
     //public string targetDoorName = "Door_right5";
     public GameObject targetObj;
+=======
+    public string targetDoorName = "Door_right5";
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
     public Animator animator;
     public DialogPool dialogPool;
     public Transform userTransform;
@@ -27,7 +31,10 @@ public class Nav_Test : MonoBehaviour
     private bool hasArrived = false;
     private bool hasShownDialog = false;
     private bool reachedFinalTarget = false;
+<<<<<<< HEAD
     //private bool isNavigationStarted = false;
+=======
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
 
     private float waitDistance = 5f;
     private float resumeDistance = 2f;
@@ -37,7 +44,11 @@ public class Nav_Test : MonoBehaviour
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.enabled = false;
 
+<<<<<<< HEAD
         //GameObject targetObj = GameObject.Find(targetDoorName);
+=======
+        GameObject targetObj = GameObject.Find(targetDoorName);
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
         if (targetObj != null)
         {
             target = targetObj.transform;
@@ -45,7 +56,11 @@ public class Nav_Test : MonoBehaviour
         }
         else
         {
+<<<<<<< HEAD
             //Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+=======
+            Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
         }
     }
 
@@ -98,7 +113,11 @@ public class Nav_Test : MonoBehaviour
     void StartNavigation()
     {
         if (platformPoints.Count == 0 || target == null) return;
+<<<<<<< HEAD
         //isNavigationStarted = true;
+=======
+
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
         agent.enabled = true;
         agent.isStopped = false;
 
@@ -108,8 +127,13 @@ public class Nav_Test : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD
         //if (!agent.enabled || !isNavigationStarted || reachedFinalTarget) return;
         if (!agent.enabled || reachedFinalTarget) return;
+=======
+        if (!agent.enabled || reachedFinalTarget) return;
+
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
         float speed = agent.velocity.magnitude;
         float smoothedSpeed = Mathf.Lerp(animator.GetFloat("Speed"), speed, Time.deltaTime * 5f);
         smoothedSpeed = Mathf.Clamp(smoothedSpeed, 0f, 2f); // 限制最大值
@@ -153,7 +177,11 @@ public class Nav_Test : MonoBehaviour
         }
 
         // 到达目标点
+<<<<<<< HEAD
         if (!agent.pathPending && agent.remainingDistance <= 0.05f && !hasArrived)
+=======
+        if (!agent.pathPending && agent.remainingDistance <= 0.5f && !hasArrived)
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
         {
             hasArrived = true;
             HandleArrivalLogic();
