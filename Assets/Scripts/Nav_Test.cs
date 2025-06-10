@@ -5,52 +5,60 @@ using MixedReality.Toolkit.UX;
 
 public class Nav_Test : MonoBehaviour
 {
-    public string targetDoorName = "Door_Left7"; // 在 Inspector 或代码中设置目标门名字
+    [System.Serializable]
+    public class PlatformPoint
+    {
+        public Transform point;
+        public bool waitForUser;
+    }
+
+    public List<PlatformPoint> platformPoints = new List<PlatformPoint>();
+    //public string targetDoorName = "Door_right5";
+    public GameObject targetObj;
     public Animator animator;
-
     public DialogPool dialogPool;
-
+    public Transform userTransform;
+    private string lastTurn = "";
     private UnityEngine.AI.NavMeshAgent agent;
     private Transform target;
+    private int currentPlatformIndex = 0;
+    private bool isWaitingForUser = false;
+    private bool waitingAtPlatform = false;
+    private bool hasArrived = false;
+    private bool hasShownDialog = false;
+    private bool reachedFinalTarget = false;
+    //private bool isNavigationStarted = false;
+
+    private float waitDistance = 5f;
+    private float resumeDistance = 2f;
 
     void Start()
     {
-        
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        agent.enabled = false; // 暂不导航
+        agent.enabled = false;
 
-        // 根据名称查找目标 Transform
-        GameObject targetObj = GameObject.Find(targetDoorName);
+        //GameObject targetObj = GameObject.Find(targetDoorName);
         if (targetObj != null)
         {
             target = targetObj.transform;
-            
-
-            //if (animator != null)
-            //    animator.SetTrigger("Greeting");
-            Invoke(nameof(ShowIntroDialog), 2f);
-            
+            //Invoke(nameof(ShowIntroDialog), 2f);
         }
         else
         {
-            Debug.LogError("未找到目标门：" + targetDoorName);
+            //Debug.LogError("❌ 未找到目标门：" + targetDoorName);
         }
     }
 
-    void ShowIntroDialog()
-    {
-        dialogPool.Get()
-           .SetHeader("Hey there!")
-           .SetBody("I'm your navigation assistant — Atlas.\n\nI'll guide you step by step.\n\nJust follow me!")
-           .SetPositive("OK", _ =>
-           {
-               Debug.Log("✅ Intro done");
-               ShowConfirmDialog();
-           })
-           .Show();
-    }
+    //void ShowIntroDialog()
+    //{
+    //    dialogPool.Get()
+    //       .SetHeader("Hey there!")
+    //       .SetBody("I'm your navigation assistant — Atlas.\n\nI'll guide you step by step.\n\nJust follow me!")
+    //       .SetPositive("OK", _ => ShowConfirmDialog())
+    //       .Show();
+    //}
 
-    void ShowConfirmDialog()
+    public void ShowConfirmDialog()
     {
         dialogPool.Get()
             .SetHeader("Ready to start?")
@@ -59,61 +67,177 @@ public class Nav_Test : MonoBehaviour
             {
                 Debug.Log("✅ Navigation started.");
                 StartNavigation();
-                // 启动导航逻辑...
             })
             .SetNegative("No", _ =>
             {
+                ShowConfirmDialog();
                 Debug.Log("❌ Navigation canceled.");
             })
             .Show();
     }
 
+    void CloseToAgentDialog()
+    {
+        if (!hasShownDialog)
+        {
+            dialogPool.Get()
+                .SetHeader("Come on, follow me.")
+                .SetBody("You need to get a little closer to the agent.")
+                .Show();
+            hasShownDialog = true;
+        }
+    }
+
+    void FinishDialog()
+    {
+        dialogPool.Get()
+            .SetHeader("You have arrived at the destination.")
+            .Show();
+    }
+
     void StartNavigation()
     {
-        if (target != null)
-        {
-            agent.enabled = true;
-            agent.SetDestination(target.position);
-        }
+        if (platformPoints.Count == 0 || target == null) return;
+        //isNavigationStarted = true;
+        agent.enabled = true;
+        agent.isStopped = false;
+
+        currentPlatformIndex = 0;
+        MoveToNextPlatform();
     }
 
     void Update()
     {
-        if (!agent.enabled || target == null) return;
-
+        //if (!agent.enabled || !isNavigationStarted || reachedFinalTarget) return;
+        if (!agent.enabled || reachedFinalTarget) return;
         float speed = agent.velocity.magnitude;
+        float smoothedSpeed = Mathf.Lerp(animator.GetFloat("Speed"), speed, Time.deltaTime * 5f);
+        smoothedSpeed = Mathf.Clamp(smoothedSpeed, 0f, 2f); // 限制最大值
 
-        if (animator != null)
+
+        if (agent.isStopped || isWaitingForUser || smoothedSpeed < 0.05f)
         {
-            animator.SetFloat("Speed", speed > 0.1f ? 0.5f : 0f);
+            smoothedSpeed = 0f;
         }
 
+        animator.SetFloat("Speed", smoothedSpeed);
+
+        // 控制转向动画
         Vector3 direction = agent.steeringTarget - transform.position;
         direction.y = 0;
         float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
-
-        if (animator != null && speed > 0.1f)
+        if (animator != null && speed > 0.1f && !agent.isStopped)
         {
+            string currentTurn = "";
+
             if (angle > 45f && angle < 135f)
-            {
-                animator.SetTrigger("Turn_right");
-            }
+                currentTurn = "Turn_right";
             else if (angle < -45f && angle > -135f)
-            {
-                animator.SetTrigger("Turn_left");
-            }
+                currentTurn = "Turn_left";
             else if (Mathf.Abs(angle) >= 135f)
+                currentTurn = "Turn_back";
+
+            if (!string.IsNullOrEmpty(currentTurn) && currentTurn != lastTurn)
             {
-                animator.SetTrigger("Turn_back");
+                animator.ResetTrigger("Turn_left");
+                animator.ResetTrigger("Turn_right");
+                animator.ResetTrigger("Turn_back");
+
+                animator.SetTrigger(currentTurn);
+                lastTurn = currentTurn;
             }
         }
-        // 到达终点
-        if (!agent.pathPending && agent.remainingDistance <= 0.5f)
+        else
         {
-            if (animator != null)
-                animator.SetTrigger("Waving");
+            lastTurn = "";
+        }
 
-            // TODO: 触发结束提示，比如显示 UI 对话框
+        // 到达目标点
+        if (!agent.pathPending && agent.remainingDistance <= 0.05f && !hasArrived)
+        {
+            hasArrived = true;
+            HandleArrivalLogic();
+        }
+
+        // 动态等待：非平台中用户离得太远
+        if (!waitingAtPlatform && !isWaitingForUser && Vector3.Distance(transform.position, userTransform.position) > waitDistance)
+        {
+            Debug.Log("📏 用户距离过远，暂停等待");
+            isWaitingForUser = true;
+            agent.isStopped = true;
+            CloseToAgentDialog();
+            StartCoroutine(WaitForUserThenContinue());
+        }
+    }
+
+    void HandleArrivalLogic()
+    {
+        if (currentPlatformIndex < platformPoints.Count)
+        {
+            var current = platformPoints[currentPlatformIndex];
+
+            Debug.Log($"🧭 到达平台 {currentPlatformIndex + 1}, waitForUser = {current.waitForUser}");
+
+            if (current.waitForUser && Vector3.Distance(transform.position, userTransform.position) > resumeDistance)
+            {
+                isWaitingForUser = true;
+                waitingAtPlatform = true;
+                agent.isStopped = true;
+                animator.SetFloat("Speed", 0f);
+                CloseToAgentDialog();
+                StartCoroutine(WaitForUserThenContinue());
+                return;
+            }
+
+            currentPlatformIndex++;
+            MoveToNextPlatform();
+        }
+        else if (!reachedFinalTarget && target != null)
+        {
+            Debug.Log("🎯 到达终点门附近");
+            agent.isStopped = true;
+            animator?.SetTrigger("Waving");
+            FinishDialog();
+            reachedFinalTarget = true;
+        }
+    }
+
+    IEnumerator WaitForUserThenContinue()
+    {
+        while (Vector3.Distance(transform.position, userTransform.position) > resumeDistance)
+        {
+            yield return new WaitForSeconds(1f);
+        }
+
+        Debug.Log("✅ 用户已靠近，继续导航");
+        isWaitingForUser = false;
+        waitingAtPlatform = false;
+        hasShownDialog = false;
+        agent.isStopped = false;
+        hasArrived = false;
+
+        if (currentPlatformIndex < platformPoints.Count)
+        {
+            //currentPlatformIndex++;
+            MoveToNextPlatform();
+        }
+        else if (target != null)
+        {
+            agent.SetDestination(target.position);
+        }
+    }
+
+    void MoveToNextPlatform()
+    {
+        hasArrived = false;
+
+        if (currentPlatformIndex < platformPoints.Count)
+        {
+            agent.SetDestination(platformPoints[currentPlatformIndex].point.position);
+        }
+        else if (target != null)
+        {
+            agent.SetDestination(target.position);
         }
     }
 }
