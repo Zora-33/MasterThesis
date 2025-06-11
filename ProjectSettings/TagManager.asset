@@ -8,9 +8,18 @@ TagManager:
   - Floor
   - Wand
   - Stair
+<<<<<<< HEAD
   - Agent
   - Arrow
   - Dialog
+=======
+<<<<<<< HEAD
+  - Agent
+  - Arrow
+  - Dialog
+=======
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
   layers:
   - Default
   - TransparentFX
