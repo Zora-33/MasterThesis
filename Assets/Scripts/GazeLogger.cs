@@ -26,10 +26,27 @@ public class GazeLogger : MonoBehaviour
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hitInfo))
             {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
                 string objTag = hitInfo.collider.gameObject.name;
                 string hitPos = hitInfo.point.ToString("F2");
                 string logLine = $"{Time.time:F2},{objTag},{hitPos}\n";
                 //Debug.Log(logLine);
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+                string objTag = hitInfo.collider.gameObject.name;
+=======
+                string objTag = hitInfo.collider.gameObject.tag;
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+                string hitPos = hitInfo.point.ToString("F2");
+                string logLine = $"{Time.time:F2},{objTag},{hitPos}\n";
+                Debug.Log(logLine);
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
                 File.AppendAllText(logPath, logLine);
             }
             else
