@@ -13,8 +13,32 @@ public class Nav_Test : MonoBehaviour
     }
 
     public List<PlatformPoint> platformPoints = new List<PlatformPoint>();
+<<<<<<< HEAD
     //public string targetDoorName = "Door_right5";
     public GameObject targetObj;
+=======
+<<<<<<< HEAD
+    //public string targetDoorName = "Door_right5";
+    public GameObject targetObj;
+=======
+<<<<<<< HEAD
+    //public string targetDoorName = "Door_right5";
+    public GameObject targetObj;
+=======
+<<<<<<< HEAD
+    //public string targetDoorName = "Door_right5";
+    public GameObject targetObj;
+=======
+<<<<<<< HEAD
+    //public string targetDoorName = "Door_right5";
+    public GameObject targetObj;
+=======
+    public string targetDoorName = "Door_right5";
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
     public Animator animator;
     public DialogPool dialogPool;
     public Transform userTransform;
@@ -27,8 +51,28 @@ public class Nav_Test : MonoBehaviour
     private bool hasArrived = false;
     private bool hasShownDialog = false;
     private bool reachedFinalTarget = false;
+<<<<<<< HEAD
     //private bool isNavigationStarted = false;
     public GazeLogger gazeLogger;
+=======
+<<<<<<< HEAD
+    //private bool isNavigationStarted = false;
+    public GazeLogger gazeLogger;
+=======
+<<<<<<< HEAD
+    //private bool isNavigationStarted = false;
+=======
+<<<<<<< HEAD
+    //private bool isNavigationStarted = false;
+=======
+<<<<<<< HEAD
+    //private bool isNavigationStarted = false;
+=======
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
 
     private float waitDistance = 5f;
     private float resumeDistance = 2f;
@@ -38,7 +82,27 @@ public class Nav_Test : MonoBehaviour
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         agent.enabled = false;
 
+<<<<<<< HEAD
         //GameObject targetObj = GameObject.Find(targetDoorName);
+=======
+<<<<<<< HEAD
+        //GameObject targetObj = GameObject.Find(targetDoorName);
+=======
+<<<<<<< HEAD
+        //GameObject targetObj = GameObject.Find(targetDoorName);
+=======
+<<<<<<< HEAD
+        //GameObject targetObj = GameObject.Find(targetDoorName);
+=======
+<<<<<<< HEAD
+        //GameObject targetObj = GameObject.Find(targetDoorName);
+=======
+        GameObject targetObj = GameObject.Find(targetDoorName);
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
         if (targetObj != null)
         {
             target = targetObj.transform;
@@ -46,7 +110,27 @@ public class Nav_Test : MonoBehaviour
         }
         else
         {
+<<<<<<< HEAD
             //Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+=======
+<<<<<<< HEAD
+            //Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+=======
+<<<<<<< HEAD
+            //Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+=======
+<<<<<<< HEAD
+            //Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+=======
+<<<<<<< HEAD
+            //Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+=======
+            Debug.LogError("❌ 未找到目标门：" + targetDoorName);
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
         }
     }
 
@@ -99,7 +183,27 @@ public class Nav_Test : MonoBehaviour
     void StartNavigation()
     {
         if (platformPoints.Count == 0 || target == null) return;
+<<<<<<< HEAD
         //isNavigationStarted = true;
+=======
+<<<<<<< HEAD
+        //isNavigationStarted = true;
+=======
+<<<<<<< HEAD
+        //isNavigationStarted = true;
+=======
+<<<<<<< HEAD
+        //isNavigationStarted = true;
+=======
+<<<<<<< HEAD
+        //isNavigationStarted = true;
+=======
+
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
         agent.enabled = true;
         agent.isStopped = false;
 
@@ -109,8 +213,33 @@ public class Nav_Test : MonoBehaviour
 
     void Update()
     {
+<<<<<<< HEAD
         //if (!agent.enabled || !isNavigationStarted || reachedFinalTarget) return;
         if (!agent.enabled || reachedFinalTarget) return;
+=======
+<<<<<<< HEAD
+        //if (!agent.enabled || !isNavigationStarted || reachedFinalTarget) return;
+        if (!agent.enabled || reachedFinalTarget) return;
+=======
+<<<<<<< HEAD
+        //if (!agent.enabled || !isNavigationStarted || reachedFinalTarget) return;
+        if (!agent.enabled || reachedFinalTarget) return;
+=======
+<<<<<<< HEAD
+        //if (!agent.enabled || !isNavigationStarted || reachedFinalTarget) return;
+        if (!agent.enabled || reachedFinalTarget) return;
+=======
+<<<<<<< HEAD
+        //if (!agent.enabled || !isNavigationStarted || reachedFinalTarget) return;
+        if (!agent.enabled || reachedFinalTarget) return;
+=======
+        if (!agent.enabled || reachedFinalTarget) return;
+
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
         float speed = agent.velocity.magnitude;
         float smoothedSpeed = Mathf.Lerp(animator.GetFloat("Speed"), speed, Time.deltaTime * 5f);
         smoothedSpeed = Mathf.Clamp(smoothedSpeed, 0f, 2f); // 限制最大值
@@ -154,7 +283,27 @@ public class Nav_Test : MonoBehaviour
         }
 
         // 到达目标点
+<<<<<<< HEAD
         if (!agent.pathPending && agent.remainingDistance <= 0.3f && !hasArrived)
+=======
+<<<<<<< HEAD
+        if (!agent.pathPending && agent.remainingDistance <= 0.3f && !hasArrived)
+=======
+<<<<<<< HEAD
+        if (!agent.pathPending && agent.remainingDistance <= 0.05f && !hasArrived)
+=======
+<<<<<<< HEAD
+        if (!agent.pathPending && agent.remainingDistance <= 0.05f && !hasArrived)
+=======
+<<<<<<< HEAD
+        if (!agent.pathPending && agent.remainingDistance <= 0.05f && !hasArrived)
+=======
+        if (!agent.pathPending && agent.remainingDistance <= 0.5f && !hasArrived)
+>>>>>>> be661738128d38105003abea2dfc36fa72deb7c4
+>>>>>>> 5122c96c277387915cc42e3a47421f6499b4f258
+>>>>>>> 11f7ec2df91ffbb41a82ed203356a90cac32385b
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
         {
             hasArrived = true;
             HandleArrivalLogic();
@@ -196,7 +345,14 @@ public class Nav_Test : MonoBehaviour
         else if (!reachedFinalTarget && target != null)
         {
             Debug.Log("🎯 到达终点门附近");
+<<<<<<< HEAD
             gazeLogger.StopLogging();
+=======
+<<<<<<< HEAD
+            gazeLogger.StopLogging();
+=======
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
             agent.isStopped = true;
             animator?.SetTrigger("Waving");
             FinishDialog();

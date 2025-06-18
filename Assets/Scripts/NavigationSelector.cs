@@ -10,8 +10,16 @@ public class NavigationSelector : MonoBehaviour
     public DialogPool dialogPool;           // 通用 DialogPool
     public ArrowSaveManager ASM;
     public Nav_Test AgentNavi;
+<<<<<<< HEAD
     public GazeLogger gazeLogger;
 
+=======
+<<<<<<< HEAD
+    public GazeLogger gazeLogger;
+
+=======
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
 
     void Start()
     {
@@ -49,8 +57,16 @@ public class NavigationSelector : MonoBehaviour
     void StartArrowMode()
     {
         Debug.Log("🟦 Arrow mode selected.");
+<<<<<<< HEAD
         ASM.EnableArrowMode(true);
         gazeLogger.StartLogging();
+=======
+<<<<<<< HEAD
+        ASM.EnableArrowMode(true);
+        gazeLogger.StartLogging();
+=======
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
         arrowNavRoot.SetActive(true);
         agentNavRoot.SetActive(false);
         ShowIntroDialogArrow();
@@ -60,8 +76,16 @@ public class NavigationSelector : MonoBehaviour
     void StartAgentMode()
     {
         Debug.Log("🧍 Agent mode selected.");
+<<<<<<< HEAD
         ASM.EnableArrowMode(false);
         gazeLogger.StartLogging();
+=======
+<<<<<<< HEAD
+        ASM.EnableArrowMode(false);
+        gazeLogger.StartLogging();
+=======
+>>>>>>> a030962cc03c360d12297e9aa3849316d533cd92
+>>>>>>> 50fc927bde5f885a32af2e1862cfef14b8acb6d1
         agentNavRoot.SetActive(true);
         arrowNavRoot.SetActive(false);
         ShowIntroDialogAgent();
