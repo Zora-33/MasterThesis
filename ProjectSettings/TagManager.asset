@@ -3,7 +3,15 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Door
+  - Floor
+  - Wand
+  - Stair
+  - Agent
+  - Arrow
+  - Dialog
+  - Target
   layers:
   - Default
   - TransparentFX
